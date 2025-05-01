@@ -1,19 +1,1000 @@
-<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>My static Space</title>
-		<link rel="stylesheet" href="style.css" />
-	</head>
-	<body>
-		<div class="card">
-			<h1>Welcome to your static Space!</h1>
-			<p>You can modify this app directly by editing <i>index.html</i> in the Files and versions tab.</p>
-			<p>
-				Also don't forget to check the
-				<a href="https://huggingface.co/docs/hub/spaces" target="_blank">Spaces documentation</a>.
-			</p>
-		</div>
-	</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Match Prediction AI System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+        }
+        .prediction-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .prediction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .team-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+        .confidence-meter {
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #10b981 100%);
+        }
+        .confidence-fill {
+            height: 100%;
+            border-radius: 4px;
+            background-color: #3b82f6;
+        }
+        .player-card {
+            transition: all 0.2s ease;
+        }
+        .player-card:hover {
+            transform: scale(1.03);
+        }
+        .chart-container {
+            height: 300px;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Header -->
+    <header class="gradient-bg text-white">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-robot text-3xl"></i>
+                    <h1 class="text-2xl font-bold">IPL AI Predictor</h1>
+                </div>
+                <nav>
+                    <ul class="flex space-x-6">
+                        <li><a href="#" class="hover:text-blue-200 transition">Dashboard</a></li>
+                        <li><a href="#" class="hover:text-blue-200 transition">Models</a></li>
+                        <li><a href="#" class="hover:text-blue-200 transition">Historical Data</a></li>
+                        <li><a href="#" class="hover:text-blue-200 transition">API Docs</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Model Selection -->
+        <section class="mb-12">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4 text-gray-800">Model Architecture Selection</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="prediction-card bg-white rounded-lg border border-gray-200 p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-project-diagram text-blue-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">Ensemble Model</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Combines gradient boosting, neural networks, and statistical models for robust predictions.</p>
+                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition">
+                            Select Model
+                        </button>
+                    </div>
+                    <div class="prediction-card bg-white rounded-lg border border-gray-200 p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-purple-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-brain text-purple-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">LLM Integration</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Ollama-powered reasoning engine to explain predictions and highlight key factors.</p>
+                        <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded transition">
+                            Select Model
+                        </button>
+                    </div>
+                    <div class="prediction-card bg-white rounded-lg border border-gray-200 p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-green-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-chart-line text-green-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">Time-Series Model</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Accounts for team momentum and performance trends over recent matches.</p>
+                        <button class="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded transition">
+                            Select Model
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Match Prediction -->
+        <section class="mb-12">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-6 text-gray-800">Upcoming Match Prediction</h2>
+                
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                    <div class="flex flex-col items-center mb-6 md:mb-0">
+                        <img src="https://img.icons8.com/color/96/000000/cricket.png" alt="MI" class="team-logo mb-2">
+                        <h3 class="font-bold text-lg">Mumbai Indians</h3>
+                        <p class="text-gray-600">Last 5: W-W-L-W-L</p>
+                    </div>
+                    
+                    <div class="text-center my-4 md:my-0">
+                        <div class="bg-gray-100 inline-block px-6 py-2 rounded-full">
+                            <p class="font-medium text-gray-700">Match 56 • Wankhede Stadium</p>
+                            <p class="text-sm text-gray-500">May 12, 2023 • 7:30 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col items-center">
+                        <img src="https://img.icons8.com/color/96/000000/cricket.png" alt="CSK" class="team-logo mb-2">
+                        <h3 class="font-bold text-lg">Chennai Super Kings</h3>
+                        <p class="text-gray-600">Last 5: L-W-W-W-L</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Winner Prediction -->
+                    <div class="prediction-card bg-white rounded-lg border border-blue-100 p-6">
+                        <h3 class="font-semibold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-trophy text-yellow-500 mr-2"></i> Match Winner Prediction
+                        </h3>
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium">Mumbai Indians</span>
+                                <span class="font-bold text-blue-600">62%</span>
+                            </div>
+                            <div class="confidence-meter w-full">
+                                <div class="confidence-fill" style="width: 62%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium">Chennai Super Kings</span>
+                                <span class="font-bold text-blue-600">38%</span>
+                            </div>
+                            <div class="confidence-meter w-full">
+                                <div class="confidence-fill" style="width: 38%"></div>
+                            </div>
+                        </div>
+                        <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-medium text-gray-800 mb-2 flex items-center">
+                                <i class="fas fa-lightbulb text-blue-500 mr-2"></i> Key Factors
+                            </h4>
+                            <ul class="text-sm text-gray-700 space-y-1">
+                                <li>• MI's strong home record at Wankhede</li>
+                                <li>• CSK's bowling weakness in death overs</li>
+                                <li>• Recent form favors MI (3 wins in last 5)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Score Prediction -->
+                    <div class="prediction-card bg-white rounded-lg border border-green-100 p-6">
+                        <h3 class="font-semibold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-chart-bar text-green-500 mr-2"></i> Score Prediction
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <p class="text-sm text-gray-600">MI Predicted Score</p>
+                                <p class="text-2xl font-bold text-gray-800">185-195</p>
+                                <p class="text-xs text-gray-500">90% confidence interval</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <p class="text-sm text-gray-600">CSK Predicted Score</p>
+                                <text class="text-2xl font-bold text-gray-800">170-180</text>
+                                <p class="text-xs text-gray-500">85% confidence interval</p>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-green-50 rounded-lg">
+                            <h4 class="font-medium text-gray-800 mb-2 flex items-center">
+                                <i class="fas fa-info-circle text-green-500 mr-2"></i> Model Insights
+                            </h4>
+                            <p class="text-sm text-gray-700">
+                                The model predicts a high-scoring match with MI likely to post a competitive total. 
+                                CSK's predicted score is lower due to their recent struggles against quality pace attacks.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- LLM Reasoning -->
+                <div class="mt-6 p-6 bg-gray-50 rounded-lg border border-gray-200">
+                    <h3 class="font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-robot text-purple-500 mr-2"></i> AI Reasoning (Ollama LLM)
+                    </h3>
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <p class="text-gray-700" id="llmReasoning">
+                            "Based on the ensemble model's predictions and historical data analysis, Mumbai Indians have a 62% chance of winning this encounter. 
+                            The key differentiators appear to be their superior death bowling and home advantage. Rohit Sharma's recent return to form (averaging 45 in last 3 matches) 
+                            combined with Jasprit Bumrah's economy rate of 6.8 at this venue gives them the edge. However, CSK's spinners could exploit the middle overs if the pitch shows 
+                            signs of wear later in the evening."
+                        </p>
+                    </div>
+                    <div class="mt-4 flex justify-end">
+                        <button id="regenerateBtn" class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded flex items-center transition">
+                            <i class="fas fa-sync-alt mr-2"></i> Regenerate Analysis
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Player Performance -->
+        <section class="mb-12">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-6 text-gray-800">Key Player Performance Predictions</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="playerCards">
+                    <!-- Player cards will be populated by JavaScript -->
+                </div>
+                
+                <!-- Performance Trends -->
+                <div class="mt-6">
+                    <h3 class="font-semibold text-gray-800 mb-4">Player Performance Trends</h3>
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <div class="flex items-center mb-4">
+                            <select id="playerSelect" class="bg-gray-100 border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-blue-500">
+                                <option value="">Select a player...</option>
+                            </select>
+                            <button id="generateTrendBtn" class="ml-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded flex items-center transition">
+                                <i class="fas fa-chart-line mr-2"></i> Generate Trend
+                            </button>
+                        </div>
+                        <div class="chart-container bg-gray-50 rounded-lg flex items-center justify-center" id="chartContainer">
+                            <div class="text-center">
+                                <i class="fas fa-chart-bar text-4xl text-gray-300 mb-2"></i>
+                                <p class="text-gray-500">Performance trend chart will appear here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Evaluation -->
+        <section>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-6 text-gray-800">Model Evaluation Metrics</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="prediction-card bg-white rounded-lg border border-gray-200 p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-green-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">Accuracy</h3>
+                        </div>
+                        <p class="text-3xl font-bold text-gray-800 mb-2">78.4%</p>
+                        <p class="text-sm text-gray-600">±2.1% (95% CI)</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Last Season</span>
+                                <span>75.2%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 25%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="prediction-card bg-white rounded-lg border border-gray-200 p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-balance-scale text-blue-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">F1 Score</h3>
+                        </div>
+                        <p class="text-3xl font-bold text-gray-800 mb-2">0.82</p>
+                        <p class="text-sm text-gray-600">Weighted average</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Class Balance</span>
+                                <span>0.79</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: 79%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="prediction-card bg-white rounded-lg border border-gray-200 p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-purple-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-chart-pie text-purple-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">Brier Score</h3>
+                        </div>
+                        <p class="text-3xl font-bold text-gray-800 mb-2">0.18</p>
+                        <p class="text-sm text-gray-600">(Lower is better)</p>
+                        <div class="mt-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Calibration</span>
+                                <span>Excellent</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-purple-600 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature Importance -->
+                <div class="mt-6">
+                    <h3 class="font-semibold text-gray-800 mb-4">Feature Importance Analysis</h3>
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <div class="flex flex-col space-y-4" id="featureImportance">
+                            <!-- Features will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Model Retraining -->
+                <div class="mt-8 bg-blue-50 rounded-lg border border-blue-200 p-6">
+                    <h3 class="font-semibold text-gray-800 mb-2 flex items-center">
+                        <i class="fas fa-cogs text-blue-500 mr-2"></i> Model Retraining Pipeline
+                    </h3>
+                    <p class="text-gray-700 mb-4">The system automatically retrains models as new match data becomes available.</p>
+                    <div class="flex items-center">
+                        <div class="mr-4">
+                            <div class="bg-blue-100 p-3 rounded-full">
+                                <i class="fas fa-sync-alt text-blue-600"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium">Next Scheduled Retraining</span>
+                                <span class="text-sm font-bold">May 13, 2023 (Post-match)</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full animate-pulse" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="gradient-bg text-white mt-12">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="font-bold text-lg mb-4">IPL AI Predictor</h3>
+                    <p class="text-blue-100">
+                        Advanced machine learning models for cricket match predictions powered by ensemble techniques and LLM reasoning.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Models</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-100 hover:text-white transition">Ensemble Model</a></li>
+                        <li><a href="#" class="text-blue-100 hover:text-white transition">LLM Integration</a></li>
+                        <li><a href="#" class="text-blue-100 hover:text-white transition">Time-Series</a></li>
+                        <li><a href="#" class="text-blue-100 hover:text-white transition">Player Performance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-100 hover:text-white transition">API Documentation</a></li>
+                        <li><a href="#" class="text-blue-100 hover:text-white transition">Model White Paper</a></li>
+                        <li><a href="#" class="text-blue-100 hover:text-white transition">Historical Data</a></li>
+                        <li><a href="#" class="text-blue-100 hover:text-white transition">GitHub Repository</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-blue-100 hover:text-white text-xl transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-blue-100 hover:text-white text-xl transition"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-blue-100 hover:text-white text-xl transition"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-blue-100 hover:text-white text-xl transition"><i class="fab fa-medium"></i></a>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-sm text-blue-100">© 2023 IPL AI Predictor</p>
+                        <p class="text-xs text-blue-200 mt-1">All predictions are probabilistic estimates</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Django Backend Implementation -->
+    <script type="text/django-template" id="django-backend">
+        # Django models.py
+        from django.db import models
+        from django.contrib.postgres.fields import JSONField
+
+        class Team(models.Model):
+            name = models.CharField(max_length=100)
+            short_name = models.CharField(max_length=10)
+            logo = models.URLField()
+            home_ground = models.CharField(max_length=100)
+            
+            def __str__(self):
+                return self.name
+
+        class Player(models.Model):
+            name = models.CharField(max_length=100)
+            team = models.ForeignKey(Team, on_delete=models.CASCADE)
+            role = models.CharField(max_length=50)  # batsman, bowler, all-rounder, wicket-keeper
+            batting_style = models.CharField(max_length=50, blank=True)
+            bowling_style = models.CharField(max_length=50, blank=True)
+            
+            def __str__(self):
+                return f"{self.name} ({self.team.short_name})"
+
+        class Match(models.Model):
+            match_number = models.IntegerField()
+            season = models.IntegerField()
+            date = models.DateTimeField()
+            venue = models.CharField(max_length=100)
+            team1 = models.ForeignKey(Team, related_name='home_matches', on_delete=models.CASCADE)
+            team2 = models.ForeignKey(Team, related_name='away_matches', on_delete=models.CASCADE)
+            toss_winner = models.ForeignKey(Team, related_name='toss_wins', on_delete=models.CASCADE, null=True)
+            toss_decision = models.CharField(max_length=10, blank=True)  # bat or field
+            winner = models.ForeignKey(Team, related_name='match_wins', on_delete=models.CASCADE, null=True)
+            result = models.CharField(max_length=100)
+            player_of_match = models.ForeignKey(Player, on_delete=models.CASCADE, null=True)
+            details = JSONField(default=dict)
+            
+            def __str__(self):
+                return f"Match {self.match_number}: {self.team1} vs {self.team2}"
+
+        class PlayerPerformance(models.Model):
+            player = models.ForeignKey(Player, on_delete=models.CASCADE)
+            match = models.ForeignKey(Match, on_delete=models.CASCADE)
+            runs = models.IntegerField(default=0)
+            balls_faced = models.IntegerField(default=0)
+            fours = models.IntegerField(default=0)
+            sixes = models.IntegerField(default=0)
+            wickets = models.IntegerField(default=0)
+            overs_bowled = models.DecimalField(max_digits=4, decimal_places=1, default=0)
+            runs_conceded = models.IntegerField(default=0)
+            maidens = models.IntegerField(default=0)
+            catches = models.IntegerField(default=0)
+            stumpings = models.IntegerField(default=0)
+            
+            @property
+            def strike_rate(self):
+                if self.balls_faced > 0:
+                    return round((self.runs / self.balls_faced) * 100, 2)
+                return 0
+                
+            @property
+            def economy_rate(self):
+                if self.overs_bowled > 0:
+                    return round(self.runs_conceded / self.overs_bowled, 2)
+                return 0
+                
+            def __str__(self):
+                return f"{self.player} in {self.match}"
+
+        class PredictionModel(models.Model):
+            name = models.CharField(max_length=100)
+            version = models.CharField(max_length=20)
+            description = models.TextField()
+            created_at = models.DateTimeField(auto_now_add=True)
+            is_active = models.BooleanField(default=True)
+            parameters = JSONField(default=dict)
+            
+            def __str__(self):
+                return f"{self.name} v{self.version}"
+
+        class MatchPrediction(models.Model):
+            match = models.ForeignKey(Match, on_delete=models.CASCADE)
+            model = models.ForeignKey(PredictionModel, on_delete=models.CASCADE)
+            team1_win_prob = models.DecimalField(max_digits=5, decimal_places=2)
+            team2_win_prob = models.DecimalField(max_digits=5, decimal_places=2)
+            team1_score_range = models.CharField(max_length=50)
+            team2_score_range = models.CharField(max_length=50)
+            key_factors = JSONField(default=list)
+            generated_at = models.DateTimeField(auto_now_add=True)
+            
+            def __str__(self):
+                return f"Prediction for {self.match} by {self.model}"
+
+        class PlayerPrediction(models.Model):
+            player = models.ForeignKey(Player, on_delete=models.CASCADE)
+            match = models.ForeignKey(Match, on_delete=models.CASCADE)
+            model = models.ForeignKey(PredictionModel, on_delete=models.CASCADE)
+            predicted_runs = models.CharField(max_length=50)
+            predicted_wickets = models.CharField(max_length=50)
+            strike_rate_range = models.CharField(max_length=50)
+            economy_rate_range = models.CharField(max_length=50, blank=True)
+            key_insights = models.TextField()
+            generated_at = models.DateTimeField(auto_now_add=True)
+            
+            def __str__(self):
+                return f"Performance prediction for {self.player} in {self.match}"
+    </script>
+
+    <!-- FastAPI Backend Implementation -->
+    <script type="text/fastapi-template" id="fastapi-backend">
+        # FastAPI main.py
+        from fastapi import FastAPI, HTTPException
+        from pydantic import BaseModel
+        from typing import List, Optional
+        import pandas as pd
+        from sklearn.ensemble import GradientBoostingClassifier, RandomForestRegressor
+        from sklearn.neural_network import MLPClassifier
+        from xgboost import XGBClassifier
+        from sklearn.model_selection import train_test_split
+        from sklearn.metrics import accuracy_score, f1_score
+        import numpy as np
+        import joblib
+        import datetime
+
+        app = FastAPI(title="IPL Prediction API",
+                    description="API for IPL match predictions using ensemble models",
+                    version="1.0.0")
+
+        # Mock database
+        class Team(BaseModel):
+            id: int
+            name: str
+            short_name: str
+            logo: str
+            home_ground: str
+
+        class Player(BaseModel):
+            id: int
+            name: str
+            team_id: int
+            role: str
+            batting_style: Optional[str] = None
+            bowling_style: Optional[str] = None
+
+        class Match(BaseModel):
+            id: int
+            match_number: int
+            season: int
+            date: datetime.datetime
+            venue: str
+            team1_id: int
+            team2_id: int
+            toss_winner_id: Optional[int] = None
+            toss_decision: Optional[str] = None
+            winner_id: Optional[int] = None
+            result: str
+            player_of_match_id: Optional[int] = None
+
+        # Prediction models
+        class EnsembleModel:
+            def __init__(self):
+                self.gb_model = GradientBoostingClassifier()
+                self.nn_model = MLPClassifier()
+                self.xgb_model = XGBClassifier()
+                self.score_model = RandomForestRegressor()
+                self.models_trained = False
+                
+            def train(self, X, y):
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+                
+                # Train individual models
+                self.gb_model.fit(X_train, y_train)
+                self.nn_model.fit(X_train, y_train)
+                self.xgb_model.fit(X_train, y_train)
+                
+                # Train score prediction model
+                score_y = X['total_runs']  # Assuming we have this feature
+                self.score_model.fit(X_train.drop('total_runs', axis=1), score_y)
+                
+                self.models_trained = True
+                return {
+                    "gb_accuracy": accuracy_score(y_test, self.gb_model.predict(X_test)),
+                    "nn_accuracy": accuracy_score(y_test, self.nn_model.predict(X_test)),
+                    "xgb_accuracy": accuracy_score(y_test, self.xgb_model.predict(X_test)),
+                    "score_r2": self.score_model.score(X_test.drop('total_runs', axis=1), X_test['total_runs'])
+                }
+                
+            def predict_winner(self, match_features):
+                if not self.models_trained:
+                    raise ValueError("Models not trained yet")
+                    
+                # Get predictions from all models
+                gb_pred = self.gb_model.predict_proba([match_features])[0]
+                nn_pred = self.nn_model.predict_proba([match_features])[0]
+                xgb_pred = self.xgb_model.predict_proba([match_features])[0]
+                
+                # Ensemble prediction (weighted average)
+                team1_prob = (gb_pred[0] * 0.4 + nn_pred[0] * 0.3 + xgb_pred[0] * 0.3)
+                team2_prob = 1 - team1_prob
+                
+                return {
+                    "team1_win_prob": float(team1_prob),
+                    "team2_win_prob": float(team2_prob),
+                    "model_confidence": float(np.mean([gb_pred.max(), nn_pred.max(), xgb_pred.max()]))
+                }
+                
+            def predict_score(self, match_features):
+                if not self.models_trained:
+                    raise ValueError("Models not trained yet")
+                    
+                pred = self.score_model.predict([match_features])[0]
+                return {
+                    "predicted_score": int(pred),
+                    "lower_bound": int(pred * 0.95),
+                    "upper_bound": int(pred * 1.05)
+                }
+
+        # Initialize models
+        ensemble_model = EnsembleModel()
+
+        # API Endpoints
+        @app.post("/train-models/")
+        async def train_models():
+            # In a real implementation, this would load historical data
+            # For demo purposes, we'll mock training
+            mock_X = pd.DataFrame({
+                'team1_strength': [0.7, 0.6, 0.8, 0.5],
+                'team2_strength': [0.6, 0.7, 0.5, 0.8],
+                'venue_advantage': [0.1, -0.1, 0.2, -0.2],
+                'recent_form': [0.8, 0.5, 0.6, 0.4],
+                'total_runs': [180, 170, 190, 160]
+            })
+            mock_y = np.array([1, 0, 1, 0])
+            
+            results = ensemble_model.train(mock_X, mock_y)
+            return {"message": "Models trained successfully", "metrics": results}
+
+        @app.get("/predict-match/{match_id}")
+        async def predict_match(match_id: int):
+            # In a real implementation, this would fetch match details and features
+            # For demo, we'll use mock features
+            mock_features = [0.7, 0.6, 0.1, 0.8]
+            
+            winner_pred = ensemble_model.predict_winner(mock_features)
+            score_pred = ensemble_model.predict_score(mock_features + [180])  # Adding expected runs
+            
+            return {
+                "match_id": match_id,
+                "team1": {
+                    "id": 1,
+                    "name": "Mumbai Indians",
+                    "win_probability": winner_pred["team1_win_prob"],
+                    "score_range": f"{score_pred['lower_bound']}-{score_pred['upper_bound']}"
+                },
+                "team2": {
+                    "id": 2,
+                    "name": "Chennai Super Kings",
+                    "win_probability": winner_pred["team2_win_prob"],
+                    "score_range": f"{int(score_pred['lower_bound']*0.9)}-{int(score_pred['upper_bound']*0.9)}"
+                },
+                "model_confidence": winner_pred["model_confidence"],
+                "key_factors": [
+                    "Team1 has strong home record at this venue",
+                    "Team2's bowling weakness in death overs",
+                    "Recent form favors Team1"
+                ]
+            }
+
+        @app.get("/predict-player/{player_id}/{match_id}")
+        async def predict_player_performance(player_id: int, match_id: int):
+            # Mock data for demo
+            return {
+                "player_id": player_id,
+                "match_id": match_id,
+                "predicted_runs": "35-45",
+                "predicted_wickets": "1-2",
+                "strike_rate_range": "135-145",
+                "economy_rate_range": "6.5-7.5",
+                "key_insights": "Player has strong record against opposition's bowling type"
+            }
+
+        @app.get("/model-metrics/")
+        async def get_model_metrics():
+            return {
+                "accuracy": 0.784,
+                "f1_score": 0.82,
+                "brier_score": 0.18,
+                "feature_importance": {
+                    "recent_form": 0.42,
+                    "head_to_head": 0.35,
+                    "venue_performance": 0.28,
+                    "player_availability": 0.25,
+                    "toss_impact": 0.18
+                }
+            }
+
+        if __name__ == "__main__":
+            import uvicorn
+            uvicorn.run(app, host="0.0.0.0", port=8000)
+    </script>
+
+    <!-- JavaScript for Frontend-Backend Integration -->
+    <script>
+        // Sample data for players
+        const players = [
+            {
+                id: 1,
+                name: "Rohit Sharma",
+                team: "Mumbai Indians",
+                role: "Batsman",
+                predictedRuns: "35-45",
+                predictedWickets: "0",
+                strikeRate: "135-145",
+                economyRate: "",
+                insights: "Strong against pace, averages 42 vs CSK in last 3 seasons",
+                color: "blue"
+            },
+            {
+                id: 2,
+                name: "Jasprit Bumrah",
+                team: "Mumbai Indians",
+                role: "Bowler",
+                predictedRuns: "5-10",
+                predictedWickets: "2-3",
+                strikeRate: "",
+                economyRate: "6.5-7.5",
+                insights: "Excellent death bowler, 85% of wickets in last 5 overs",
+                color: "yellow"
+            },
+            {
+                id: 3,
+                name: "MS Dhoni",
+                team: "Chennai Super Kings",
+                role: "WK-Batsman",
+                predictedRuns: "25-35",
+                predictedWickets: "0",
+                strikeRate: "150-160",
+                economyRate: "",
+                insights: "Finisher role, 78% not outs in chases this season",
+                color: "yellow-dark"
+            },
+            {
+                id: 4,
+                name: "Deepak Chahar",
+                team: "Chennai Super Kings",
+                role: "Bowler",
+                predictedRuns: "8-12",
+                predictedWickets: "1-2",
+                strikeRate: "",
+                economyRate: "8.0-9.0",
+                insights: "Powerplay specialist but struggles against left-handers",
+                color: "red"
+            }
+        ];
+
+        // Feature importance data
+        const features = [
+            { name: "Recent Form (Last 5 matches)", importance: 0.42 },
+            { name: "Head-to-Head Record", importance: 0.35 },
+            { name: "Venue Performance", importance: 0.28 },
+            { name: "Player Availability", importance: 0.25 },
+            { name: "Toss Impact", importance: 0.18 }
+        ];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Populate player cards
+            const playerCardsContainer = document.getElementById('playerCards');
+            players.forEach(player => {
+                const colorClass = player.color === 'yellow-dark' ? 'bg-yellow-800' : `bg-${player.color}-600`;
+                const textColorClass = player.color === 'yellow-dark' ? 'text-yellow-700' : `text-${player.color}-500`;
+                const bgColorClass = player.color === 'yellow-dark' ? 'bg-yellow-100' : `bg-${player.color}-50`;
+                
+                playerCardsContainer.innerHTML += `
+                    <div class="player-card bg-white rounded-lg border border-gray-200 overflow-hidden">
+                        <div class="${colorClass} p-4 text-white">
+                            <h3 class="font-bold text-lg">${player.name}</h3>
+                            <p class="text-sm opacity-80">${player.team} • ${player.role}</p>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between mb-3">
+                                <div>
+                                    <p class="text-xs text-gray-500">Predicted Runs</p>
+                                    <p class="font-bold">${player.predictedRuns}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">${player.role.includes('Bowler') ? 'Economy' : 'Strike Rate'}</p>
+                                    <p class="font-bold">${player.role.includes('Bowler') ? player.economyRate : player.strikeRate}</p>
+                                </div>
+                            </div>
+                            <div class="${bgColorClass} p-3 rounded-lg">
+                                <p class="text-xs text-gray-700">
+                                    <i class="fas fa-info-circle ${textColorClass} mr-1"></i> 
+                                    ${player.insights}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Populate player select dropdown
+            const playerSelect = document.getElementById('playerSelect');
+            players.forEach(player => {
+                const option = document.createElement('option');
+                option.value = player.id;
+                option.textContent = `${player.name} (${player.team})`;
+                playerSelect.appendChild(option);
+            });
+
+            // Populate feature importance
+            const featureContainer = document.getElementById('featureImportance');
+            features.forEach(feature => {
+                const percentage = Math.round(feature.importance * 100);
+                featureContainer.innerHTML += `
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-medium">${feature.name}</span>
+                            <span class="text-sm font-bold">${feature.importance.toFixed(2)}</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: ${percentage}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Regenerate analysis button
+            document.getElementById('regenerateBtn').addEventListener('click', function() {
+                const reasoning = document.getElementById('llmReasoning');
+                reasoning.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Generating new analysis...';
+                
+                // Simulate API call to backend
+                setTimeout(() => {
+                    const newAnalysis = `"The model has refined its prediction based on recent pitch reports showing more grass cover than usual, which may assist seam bowlers early on. This gives ${Math.random() > 0.5 ? 'Mumbai Indians' : 'Chennai Super Kings'} a slight edge in the powerplay overs. The dew factor in the second innings could also play a significant role, with teams preferring to chase at this venue (65% win rate when chasing last season)."`;
+                    reasoning.textContent = newAnalysis;
+                }, 1500);
+            });
+
+            // Generate trend button
+            document.getElementById('generateTrendBtn').addEventListener('click', function() {
+                const selectedPlayerId = document.getElementById('playerSelect').value;
+                const chartContainer = document.getElementById('chartContainer');
+                
+                if (!selectedPlayerId) {
+                    chartContainer.innerHTML = `
+                        <div class="text-center w-full">
+                            <i class="fas fa-exclamation-triangle text-yellow-500 text-4xl mb-2"></i>
+                            <p class="text-gray-600">Please select a player first</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const selectedPlayer = players.find(p => p.id == selectedPlayerId);
+                chartContainer.innerHTML = `
+                    <div class="w-full h-full flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-spinner fa-spin text-4xl text-blue-500 mb-2"></i>
+                            <p class="text-gray-500">Generating performance trends for ${selectedPlayer.name}...</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Simulate API call to backend
+                setTimeout(() => {
+                    chartContainer.innerHTML = `
+                        <div class="w-full h-full p-4">
+                            <h4 class="font-medium text-gray-800 mb-2">${selectedPlayer.name} - Last 5 Matches</h4>
+                            <div class="flex h-48 items-end space-x-2 mt-4">
+                                <div class="flex-1 bg-blue-200 rounded-t" style="height: ${30 + Math.random() * 70}%">
+                                    <p class="text-xs text-center mt-1">${Math.floor(10 + Math.random() * 40)}</p>
+                                </div>
+                                <div class="flex-1 bg-blue-300 rounded-t" style="height: ${30 + Math.random() * 70}%">
+                                    <p class="text-xs text-center mt-1">${Math.floor(10 + Math.random() * 40)}</p>
+                                </div>
+                                <div class="flex-1 bg-blue-400 rounded-t" style="height: ${30 + Math.random() * 70}%">
+                                    <p class="text-xs text-center mt-1">${Math.floor(10 + Math.random() * 40)}</p>
+                                </div>
+                                <div class="flex-1 bg-blue-500 rounded-t" style="height: ${30 + Math.random() * 70}%">
+                                    <p class="text-xs text-center mt-1">${Math.floor(10 + Math.random() * 40)}</p>
+                                </div>
+                                <div class="flex-1 bg-blue-600 rounded-t" style="height: ${30 + Math.random() * 70}%">
+                                    <p class="text-xs text-center mt-1">${Math.floor(10 + Math.random() * 40)}</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2 text-center">Recent match performances (runs scored)</p>
+                        </div>
+                    `;
+                }, 2000);
+            });
+
+            // Model selection interaction
+            const modelCards = document.querySelectorAll('.prediction-card');
+            modelCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.closest('button')) {
+                        const buttons = this.querySelectorAll('button');
+                        buttons.forEach(btn => {
+                            btn.classList.toggle('bg-blue-600');
+                            btn.classList.toggle('bg-green-600');
+                            btn.classList.toggle('bg-purple-600');
+                            btn.classList.toggle('bg-gray-600');
+                            
+                            if (btn.classList.contains('bg-gray-600')) {
+                                btn.innerHTML = '<i class="fas fa-check mr-2"></i> Selected';
+                            } else {
+                                const icon = this.querySelector('.fa-project-diagram, .fa-brain, .fa-chart-line');
+                                btn.innerHTML = `<i class="${icon.className} mr-2"></i> Select Model`;
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+        // Function to fetch match prediction from backend
+        async function fetchMatchPrediction(matchId) {
+            try {
+                // In a real implementation, this would call your FastAPI endpoint
+                // const response = await fetch(`http://localhost:8000/predict-match/${matchId}`);
+                // const data = await response.json();
+                
+                // For demo, we'll use mock data
+                const mockData = {
+                    team1: {
+                        id: 1,
+                        name: "Mumbai Indians",
+                        win_probability: 0.62,
+                        score_range: "185-195"
+                    },
+                    team2: {
+                        id: 2,
+                        name: "Chennai Super Kings",
+                        win_probability: 0.38,
+                        score_range: "170-180"
+                    },
+                    model_confidence: 0.85,
+                    key_factors: [
+                        "Team1 has strong home record at this venue",
+                        "Team2's bowling weakness in death overs",
+                        "Recent form favors Team1"
+                    ]
+                };
+                
+                return mockData;
+            } catch (error) {
+                console.error("Error fetching match prediction:", error);
+                return null;
+            }
+        }
+
+        // Function to fetch player prediction from backend
+        async function fetchPlayerPrediction(playerId, matchId) {
+            try {
+                // In a real implementation, this would call your FastAPI endpoint
+                // const response = await fetch(`http://localhost:8000/predict-player/${playerId}/${matchId}`);
+                // const data = await response.json();
+                
+                // For demo, we'll use mock data
+                const mockData = {
+                    player_id: playerId,
+                    match_id: matchId,
+                    predicted_runs: "35-45",
+                    predicted_wickets: "1-2",
+                    strike_rate_range: "135-145",
+                    economy_rate_range: "6.5-7.5",
+                    key_insights: "Player has strong record against opposition's bowling type"
+                };
+                
+                return mockData;
+            } catch (error) {
+                console.error("Error fetching player prediction:", error);
+                return null;
+            }
+        }
+    </script>
+<p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=bhojraj07/ai-ipl-predicter" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
 </html>
